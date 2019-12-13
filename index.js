@@ -20,18 +20,15 @@ const page = 1;
             const $ = cheerio.load(pageContent);
             const carsItems = [];
 
-            $('[data-element="name"]').each((i, header) => {             
-                    const url = `${URL_HOME}${$(header).attr('href')}`;
-                    const title = $(header).text();                   
-                    let clearingData = new RegExp('акция|кредит','i').test(title);                    
+            $('.na-card-item--list .na-card-name').each((i, header) => {
+                    const url = `${URL_HOME}${$(header).children().attr('href')}`;
+                    const title = $(header).text();
 
-                    if(!clearingData){
                     carsItems.push({
                         title,
                         url,
                         code: slugify(title)
                         })
-                }
             })
             await listItensHandler(carsItems);
         }
